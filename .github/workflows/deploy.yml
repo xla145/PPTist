@@ -28,10 +28,10 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
           cat private_key.pem
-          echo "${{ variables.DEPLOY_PATH }}"
-          chown -R www-data:www-data ${{ variables.DEPLOY_PATH }}
-          chmod -R 755 ${{ variables.DEPLOY_PATH }}
-          scp -i private_key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ variables.DEPLOY_PATH }}
+          echo "${{ env.DEPLOY_PATH }}"
+          chown -R www-data:www-data ${{ env.DEPLOY_PATH }}
+          chmod -R 755 ${{ env.DEPLOY_PATH }}
+          scp -i private_key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ env.DEPLOY_PATH }}
 
       # 步骤 5：清理 SSH 密钥
       - name: Clean up SSH private key
