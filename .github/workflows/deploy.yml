@@ -23,9 +23,16 @@ jobs:
           npm install
           npm run build
 
-      - name: Deploy to github pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.PPTIST }}
-          commit_message: deploy to github pages
-          publish_dir: ./dist
+      - name: Deploy files using SCP
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          cat private_key.pem
+          chown -R www-data:www-data ${{ secrets.DEPLOY_PATH }}
+          chmod -R 755 ${{ secrets.DEPLOY_PATH }}
+          scp -i private_key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+      # 步骤 5：清理 SSH 密钥
+      - name: Clean up SSH private key
+        run: |
+          rm -f private_key.pem
