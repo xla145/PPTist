@@ -28,10 +28,9 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
           cat private_key.pem
-          echo "$DEPLOY_PATH"
-          chown -R www-data:www-data $DEPLOY_PATH
-          chmod -R 755 $DEPLOY_PATH
-          scp -i private_key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:$DEPLOY_PATH
+          chown -R www-data:www-data /var/www/html/ppt
+          chmod -R 755 /var/www/html/ppt
+          scp -i private_key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/html/ppt
 
       # 步骤 5：清理 SSH 密钥
       - name: Clean up SSH private key
