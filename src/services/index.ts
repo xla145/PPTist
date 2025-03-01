@@ -1,7 +1,7 @@
 import axios from './config'
 
 // export const SERVER_URL = 'http://localhost:5000'
-export const SERVER_URL = (import.meta.env.MODE === 'development') ? 'http://localhost:8000/api/v1' : '/api'
+export const SERVER_URL = (import.meta.env.MODE === 'development') ? 'http://localhost:8000/api/v1' : '/api/v1'
 // export const ASSET_URL = 'https://asset.pptist.cn'
 
 export default {
