@@ -72,6 +72,7 @@
 import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import api from '@/services'
+import type { Template } from '@/services'
 import useAIPPT from '@/hooks/useAIPPT'
 import type { AIPPTSlide } from '@/types/AIPPT'
 import type { Slide } from '@/types/slides'
@@ -87,12 +88,12 @@ const mainStore = useMainStore()
 // const { templates } = storeToRefs(useSlidesStore())
 const { AIPPT } = useAIPPT()
 
-const templates = ref([])
+const templates = ref<Template[]>([])
 
 const language = ref<'zh' | 'en'>('zh')
 const keyword = ref('')
 const outline = ref('')
-const selectedTemplate = ref('template_1')
+const selectedTemplate = ref('')
 const loading = ref(false)
 const outlineCreating = ref(false)
 const outlineRef = ref<HTMLElement>()
