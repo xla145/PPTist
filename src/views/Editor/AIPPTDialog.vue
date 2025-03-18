@@ -43,7 +43,7 @@
          <OutlineEditor v-model:value="outline" />
        </div>
       <div class="btns" v-if="!outlineCreating">
-        <Button class="btn" type="primary" @click="step = 'template'">选择模板</Button>
+        <Button class="btn" type="primary" @click="selectTemplate">选择模板</Button>
         <Button class="btn" @click="outline = ''; step = 'setup'">返回重新生成</Button>
       </div>
     </div>
@@ -84,8 +84,10 @@ import FullscreenSpin from '@/components/FullscreenSpin.vue'
 import OutlineEditor from '@/components/OutlineEditor.vue'
 
 const mainStore = useMainStore()
-const { templates } = storeToRefs(useSlidesStore())
+// const { templates } = storeToRefs(useSlidesStore())
 const { AIPPT } = useAIPPT()
+
+const templates = ref([])
 
 const language = ref<'zh' | 'en'>('zh')
 const keyword = ref('')
@@ -115,6 +117,14 @@ onMounted(() => {
     inputRef.value!.focus()
   }, 500)
 })
+
+
+// 获取模板列表
+const selectTemplate = async () => {
+  const res = await api.getTemplates();
+  templates.value = res;
+  step.value = 'template';
+}
 
 const createOutline = async () => {
   if (!keyword.value) return message.error('请先输入PPT主题')

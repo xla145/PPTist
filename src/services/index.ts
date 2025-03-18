@@ -10,7 +10,7 @@ export default {
   },
 
   getFileData(filename: string): Promise<any> {
-    return axios.get(`${SERVER_URL}/ppt/static/${filename}.json`)
+    return axios.get(`${SERVER_URL}/aippt/static/${filename}.json`)
   },
 
   AIPPT_Outline(
@@ -18,7 +18,7 @@ export default {
     language: string,
     model: string,
   ): Promise<any> {
-    return fetch(`${SERVER_URL}/ppt/aippt_outline`, {
+    return fetch(`${SERVER_URL}/aippt/aippt_outline`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export default {
     language: string,
     model: string,
   ): Promise<any> {
-    return fetch(`${SERVER_URL}/ppt/aippt`, {
+    return fetch(`${SERVER_URL}/aippt/aippt`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,4 +50,10 @@ export default {
       }),
     })
   },
+
+  // 获取模板列表
+  getTemplates(): Promise<any> {
+    return axios.get(`${SERVER_URL}/aippt/templates`)
+  },
+
 }
